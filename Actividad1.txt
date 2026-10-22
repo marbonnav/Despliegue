@@ -1,0 +1,117 @@
+1. Inspeccionar peticiones con el navegador
+        Método: GET
+
+        Código de estado: 304 Not Modified
+
+        Host: www.example.com
+
+
+Repite la prueba con HTTPS
+
+    1. En qué puerto se ha establecido la conexión (pista: está en la respuesta el alt-svc)?
+        443
+
+    2. Haz clic en el candado de la barra de direcciones. ¿Qué Autoridad de Certificación ha emitido el certificado?
+        Google Trust Services
+
+    3. ¿Para qué dominio es válido el certificado?
+        *.google.com
+        www.google.com
+
+
+Peticiones HTTP con curl
+
+    1. ¿Qué cabeceras ha enviado curl en la petición?
+        *   Trying 172.66.147.243:80...
+        * Connected to www.example.com (172.66.147.243) port 80 (#0)
+        > GET / HTTP/1.1
+        > Host: www.example.com
+        > User-Agent: curl/7.81.0
+        > Accept: */*
+        >
+
+    2. ¿Qué código de estado y qué cabeceras ha devuelto el servidor?
+        < HTTP/1.1 200 OK
+        < Date: Thu, 22 Oct 2026 16:06:58 GMT
+        < Content-Type: text/html; charset=utf-8
+        < Transfer-Encoding: chunked
+        < Connection: keep-alive
+        < Server: cloudflare
+        < Last-Modified: Wed, 21 Oct 2026 19:59:02 GMT
+        < Allow: GET, HEAD
+        < Accept-Ranges: bytes
+        < Age: 11667
+        < cf-cache-status: HIT
+        < CF-RAY: a4e9c095ea02cbef-MAD
+        < alt-svc: h3=":443"; ma=86400
+        <
+        <!doctype html><html lang=en><head><meta charset=utf-8><link rel=icon href=data:,><meta name=viewport content="width=device-width,initial-scale=1"><title>Example Domain</title><style>html{color-scheme:light dark;background:light-dark(#eee,#222)}body{font:16px/1.6 system-ui,sans-serif;max-width:26em;margin:auto;padding:25vh 2em 2em;text-align:center}</style></head><body><p>This domain is for use in documentation examples without needing permission. This is not a service; avoid relying on it for testing and monitoring purposes.</p><script src=/s.js></script></body></html>
+
+
+Comprobando solo las cabeceras
+        HTTP/1.1 200 OK
+        Date: Thu, 22 Oct 2026 16:10:57 GMT
+        Content-Type: text/html; charset=utf-8
+        Connection: keep-alive
+        Server: cloudflare
+        Last-Modified: Wed, 21 Oct 2026 19:59:02 GMT
+        Allow: GET, HEAD
+        Accept-Ranges: bytes
+        Age: 11906
+        cf-cache-status: HIT
+        CF-RAY: a4e9c66fcacfcfec-MAD
+        alt-svc: h3=":443"; ma=86400
+
+
+Petición HTTPS con curl
+
+
+    ¿Qué nuevos pasos aparecen antes de que se realice la petición HTTP (pista: busca referencias a TLS, SSL o al certificado)?
+        Negociación TLS, Verificación del certificado digital, Establecimiento de la conexión cifrada, Petición HTTP
+
+    ¿Qué información del certificado puedes ver en la salida de curl?
+        Emisor, Sujeto, Nombres alternativos, Periodo de validez, Verificación del certificado
+
+
+Códigos de estado
+
+    URL 	           Código de estado 	         Significado
+    httpstat.us/200  	200 OK                       La petición se ha realizado correctamente.
+    httpstat.us/301 	301 Moved Permanently        El recurso se ha trasladado permanentemente a otra URL.
+    httpstat.us/404 	404 Not Found	             El servidor no encuentra el recurso solicitado.
+    httpstat.us/500     500 Internal Server Error    Se ha producido un error interno en el servidor.
+
+
+Petición POST con curl
+
+marbonnav@aula067pc01:~$ curl -X POST -d "nombre=tunombre&curso=DAW" https://httpbin.org/post
+{
+  "args": {},
+  "data": "",
+  "files": {},
+  "form": {
+    "curso": "DAW",
+    "nombre": "tunombre"
+  },
+  "headers": {
+    "Accept": "*/*",
+    "Content-Length": "25",
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Host": "httpbin.org",
+    "User-Agent": "curl/7.81.0",
+    "X-Amzn-Trace-Id": "Root=1-6ada38d3-4f7a8156243101b2336c53fe"
+  },
+  "json": null,
+  "origin": "213.0.87.19",
+  "url": "https://httpbin.org/post"
+}
+
+
+Preguntas finales
+
+    ¿Qué diferencias principales has observado entre una petición HTTP y una HTTPS?
+        HTTP transmite los datos sin cifrar, mientras que HTTPS utiliza TLS para cifrar la comunicación entre el cliente y el servidor, y verifica el certificado digital del servidor para comprobar su identidad y proteger la conexión.
+    ¿Por qué crees que es importante comprobar el certificado de un sitio web antes de introducir datos sensibles (contraseñas, tarjetas de crédito...)?
+        Porque permite comprobar que la conexión es segura y que el certificado corresponde al sitio web al que queremos acceder. Así reducimos el riesgo de que un atacante intercepte nuestros datos o se haga pasar por el servidor legítimo.
+    ¿Qué ventaja tiene usar curl frente a las herramientas de desarrollador del navegador a la hora de automatizar pruebas?
+        curl permite realizar peticiones HTTP y HTTPS directamente desde la terminal mediante comandos que se pueden guardar en scripts y ejecutar automáticamente. Esto facilita repetir pruebas, comprobar códigos de estado y verificar respuestas sin tener que abrir un navegador ni interactuar manualmente con él.
