@@ -1,27 +1,31 @@
-1. Inspeccionar peticiones con el navegador
-        MÃ©todo: GET
+Activitat 1
+Marc Bonet i Navarro
+2? DAW
 
-        CÃ³digo de estado: 304 Not Modified
+1. Inspeccionar peticiones con el navegador
+        Método: GET
+
+        Código de estado: 304 Not Modified
 
         Host: www.example.com
 
 
 Repite la prueba con HTTPS
 
-    1. En quÃ© puerto se ha establecido la conexiÃ³n (pista: estÃ¡ en la respuesta el alt-svc)?
+    1. En qué puerto se ha establecido la conexión (pista: está en la respuesta el alt-svc)?
         443
 
-    2. Haz clic en el candado de la barra de direcciones. Â¿QuÃ© Autoridad de CertificaciÃ³n ha emitido el certificado?
+    2. Haz clic en el candado de la barra de direcciones. ?Qué Autoridad de Certificación ha emitido el certificado?
         Google Trust Services
 
-    3. Â¿Para quÃ© dominio es vÃ¡lido el certificado?
+    3. ?Para qué dominio es válido el certificado?
         *.google.com
         www.google.com
 
 
 Peticiones HTTP con curl
 
-    1. Â¿QuÃ© cabeceras ha enviado curl en la peticiÃ³n?
+    1. ?Qué cabeceras ha enviado curl en la petición?
         *   Trying 172.66.147.243:80...
         * Connected to www.example.com (172.66.147.243) port 80 (#0)
         > GET / HTTP/1.1
@@ -30,7 +34,7 @@ Peticiones HTTP con curl
         > Accept: */*
         >
 
-    2. Â¿QuÃ© cÃ³digo de estado y quÃ© cabeceras ha devuelto el servidor?
+    2. ?Qué código de estado y qué cabeceras ha devuelto el servidor?
         < HTTP/1.1 200 OK
         < Date: Thu, 22 Oct 2026 16:06:58 GMT
         < Content-Type: text/html; charset=utf-8
@@ -63,26 +67,26 @@ Comprobando solo las cabeceras
         alt-svc: h3=":443"; ma=86400
 
 
-PeticiÃ³n HTTPS con curl
+Petición HTTPS con curl
 
 
-    Â¿QuÃ© nuevos pasos aparecen antes de que se realice la peticiÃ³n HTTP (pista: busca referencias a TLS, SSL o al certificado)?
-        NegociaciÃ³n TLS, VerificaciÃ³n del certificado digital, Establecimiento de la conexiÃ³n cifrada, PeticiÃ³n HTTP
+    ?Qué nuevos pasos aparecen antes de que se realice la petición HTTP (pista: busca referencias a TLS, SSL o al certificado)?
+        Negociación TLS, Verificación del certificado digital, Establecimiento de la conexión cifrada, Petición HTTP
 
-    Â¿QuÃ© informaciÃ³n del certificado puedes ver en la salida de curl?
-        Emisor, Sujeto, Nombres alternativos, Periodo de validez, VerificaciÃ³n del certificado
+    ?Qué información del certificado puedes ver en la salida de curl?
+        Emisor, Sujeto, Nombres alternativos, Periodo de validez, Verificación del certificado
 
 
-CÃ³digos de estado
+Códigos de estado
 
-    URL 	           CÃ³digo de estado 	         Significado
-    httpstat.us/200  	200 OK                       La peticiÃ³n se ha realizado correctamente.
+    URL 	           Código de estado 	         Significado
+    httpstat.us/200  	200 OK                       La petición se ha realizado correctamente.
     httpstat.us/301 	301 Moved Permanently        El recurso se ha trasladado permanentemente a otra URL.
     httpstat.us/404 	404 Not Found	             El servidor no encuentra el recurso solicitado.
     httpstat.us/500     500 Internal Server Error    Se ha producido un error interno en el servidor.
 
 
-PeticiÃ³n POST con curl
+Petición POST con curl
 
 marbonnav@aula067pc01:~$ curl -X POST -d "nombre=tunombre&curso=DAW" https://httpbin.org/post
 {
@@ -109,9 +113,9 @@ marbonnav@aula067pc01:~$ curl -X POST -d "nombre=tunombre&curso=DAW" https://htt
 
 Preguntas finales
 
-    Â¿QuÃ© diferencias principales has observado entre una peticiÃ³n HTTP y una HTTPS?
-        HTTP transmite los datos sin cifrar, mientras que HTTPS utiliza TLS para cifrar la comunicaciÃ³n entre el cliente y el servidor, y verifica el certificado digital del servidor para comprobar su identidad y proteger la conexiÃ³n.
-    Â¿Por quÃ© crees que es importante comprobar el certificado de un sitio web antes de introducir datos sensibles (contraseÃ±as, tarjetas de crÃ©dito...)?
-        Porque permite comprobar que la conexiÃ³n es segura y que el certificado corresponde al sitio web al que queremos acceder. AsÃ­ reducimos el riesgo de que un atacante intercepte nuestros datos o se haga pasar por el servidor legÃ­timo.
-    Â¿QuÃ© ventaja tiene usar curl frente a las herramientas de desarrollador del navegador a la hora de automatizar pruebas?
-        curl permite realizar peticiones HTTP y HTTPS directamente desde la terminal mediante comandos que se pueden guardar en scripts y ejecutar automÃ¡ticamente. Esto facilita repetir pruebas, comprobar cÃ³digos de estado y verificar respuestas sin tener que abrir un navegador ni interactuar manualmente con Ã©l.
+    ?Qué diferencias principales has observado entre una petición HTTP y una HTTPS?
+        HTTP transmite los datos sin cifrar, mientras que HTTPS utiliza TLS para cifrar la comunicación entre el cliente y el servidor, y verifica el certificado digital del servidor para comprobar su identidad y proteger la conexión.
+    ?Por qué crees que es importante comprobar el certificado de un sitio web antes de introducir datos sensibles (contrase?as, tarjetas de crédito...)?
+        Porque permite comprobar que la conexión es segura y que el certificado corresponde al sitio web al que queremos acceder. Así reducimos el riesgo de que un atacante intercepte nuestros datos o se haga pasar por el servidor legítimo.
+    ?Qué ventaja tiene usar curl frente a las herramientas de desarrollador del navegador a la hora de automatizar pruebas?
+        curl permite realizar peticiones HTTP y HTTPS directamente desde la terminal mediante comandos que se pueden guardar en scripts y ejecutar automáticamente. Esto facilita repetir pruebas, comprobar códigos de estado y verificar respuestas sin tener que abrir un navegador ni interactuar manualmente con él.
